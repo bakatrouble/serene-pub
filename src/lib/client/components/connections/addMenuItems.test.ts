@@ -7,7 +7,8 @@ describe("the Add menu's items", () => {
 			"connection",
 			"koboldcpp",
 			"ollama",
-			"audiocpp"
+			"audiocpp",
+			"audiocpp-external"
 		])
 	})
 
@@ -15,7 +16,7 @@ describe("the Add menu's items", () => {
 		const keys = addMenuItemKeys({
 			canRunLocalRuntimes: canRunLocalRuntimes({ isAndroidWrapper: true })
 		})
-		expect(keys).toEqual(["connection"])
+		expect(keys).toEqual(["connection", "audiocpp-external"])
 	})
 
 	test("add connections only — models are got in the Models view", () => {

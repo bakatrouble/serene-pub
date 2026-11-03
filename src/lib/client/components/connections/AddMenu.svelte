@@ -34,6 +34,8 @@
 		onAddOllama: () => void
 		/** Switch the audio.cpp manager on and open its connection. */
 		onAddAudioCpp?: () => void
+		/** Open the new-connection dialog preset to an external audio.cpp server. */
+		onAddAudioCppExternal?: () => void
 		/**
 		 * Hides the KoboldCPP and Ollama items — false in the Android app, where
 		 * the server refuses both (`canRunLocalRuntimes`).
@@ -45,6 +47,7 @@
 		onAddKoboldCpp,
 		onAddOllama,
 		onAddAudioCpp = () => {},
+		onAddAudioCppExternal = () => {},
 		canRunLocalRuntimes = true
 	}: Props = $props()
 
@@ -78,6 +81,13 @@
 			title: "audio.cpp, run by Serene Pub",
 			blurb: "Install and manage a local speech runtime",
 			run: onAddAudioCpp
+		},
+		{
+			key: "audiocpp-external",
+			icon: connectionTypeIcon(CONNECTION_TYPE.AUDIOCPP, Icons.Cable),
+			title: "audio.cpp, external",
+			blurb: "Point at an audio.cpp server you already run",
+			run: onAddAudioCppExternal
 		},
 		{
 			key: "ollama",

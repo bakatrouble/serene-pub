@@ -118,7 +118,9 @@
 		 */
 		detailOpen?: boolean
 		/** Open Add; a door may narrow the service picker to one category. */
-		onAddNew: (opts?: { category?: "cloud" | "local" | "custom" }) => void
+		onAddNew: (
+			opts?: { category?: "cloud" | "local" | "custom"; service?: string }
+		) => void
 		/** Switch a manager on and open its connection. */
 		onEnableManager: (kind: "koboldcpp" | "ollama" | "audiocpp") => void
 		onOpenConnection: (connection: Row) => void
@@ -558,6 +560,8 @@
 				onAddKoboldCpp={() => onEnableManager("koboldcpp")}
 				onAddOllama={() => onEnableManager("ollama")}
 				onAddAudioCpp={() => onEnableManager("audiocpp")}
+				onAddAudioCppExternal={() =>
+					onAddNew({ service: CONNECTION_TYPE.AUDIOCPP })}
 				canRunLocalRuntimes={localRuntimes}
 			/>
 		{/snippet}

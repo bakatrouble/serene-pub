@@ -10,7 +10,12 @@
  * 2026-10-11).
  */
 
-export type AddMenuItemKey = "connection" | "koboldcpp" | "ollama" | "audiocpp"
+export type AddMenuItemKey =
+	| "connection"
+	| "koboldcpp"
+	| "ollama"
+	| "audiocpp"
+	| "audiocpp-external"
 
 /**
  * Whether this instance can run a local runtime (KoboldCPP, Ollama) for
@@ -31,6 +36,11 @@ export function addMenuItemKeys(opts: {
 }): AddMenuItemKey[] {
 	return [
 		"connection",
-		...(opts.canRunLocalRuntimes ? (["koboldcpp", "ollama", "audiocpp"] as const) : [])
+		...(opts.canRunLocalRuntimes
+			? (["koboldcpp", "ollama", "audiocpp"] as const)
+			: []),
+		// An already-running server anywhere — no local runtime needed, so
+		// offered even where managers are hidden (Android).
+		"audiocpp-external"
 	]
 }

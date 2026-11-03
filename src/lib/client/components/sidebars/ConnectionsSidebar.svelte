@@ -131,7 +131,10 @@
 		ConnectionServiceCategory,
 		ConnectionServiceItem
 	} from "$lib/shared/utils/connectionServiceItems"
-	import { connectionTypeDisabledReason } from "$lib/shared/utils/connectionServiceItems"
+	import {
+		buildConnectionServiceItems,
+		connectionTypeDisabledReason
+	} from "$lib/shared/utils/connectionServiceItems"
 	import {
 		NOTE_MAX_LENGTH,
 		normalizeNote
@@ -643,12 +646,22 @@
 	 */
 	let newConnectionBaseUrl = $state("")
 	const newConnectionAsksAddress = $derived(newConnectionService?.setupNeed === "address")
-	function handleNew(opts: { category?: ConnectionServiceCategory } = {}) {
+	function handleNew(
+		opts: { category?: ConnectionServiceCategory; service?: string } = {}
+	) {
 		newConnectionCategory = opts.category
 		newConnectionName = ""
 		newConnectionService = undefined
 		newConnectionBaseUrl = ""
 		nameTouched = false
+		// A menu door straight to one service (external audio.cpp):
+		// preselect its picker entry so only the name + address remain.
+		if (opts.service) {
+			const preset = buildConnectionServiceItems().find(
+				(item) => item.type === opts.service
+			)
+			if (preset) newConnectionService = preset
+		}
 		// Seed the picker's modality from where the person is standing: the
 		// index's capability filter, or the open connection's own modality.
 		const seed =
